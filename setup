@@ -1,0 +1,55 @@
+#!/bin/bash
+#vim: ft=sh
+
+set -e
+
+script=$0
+template=$1
+target="$(pwd)"
+src="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+pipeline_types="$(cd $src && find . -name 'pipeline.yml' | sed -e "s|^\./||;s|/pipeline.yml$||")"
+
+usage() {
+
+  title=${1:-"Setup pipeline template for the desired type of pipeline."}
+  printf "\n$title\n\n"
+
+cat << USAGE
+Usage: $script <type>
+
+where <type> is one of:
+$(echo "$pipeline_types" | sed -e "s/^/  - /")
+
+USAGE
+  exit ${2:-0}
+}
+
+if [[ -d ${target}/ci ]]
+then
+  echo "${target}/ci already exists -- aborting!"
+fi
+
+if [[ ${#@} != 1 ]]
+then
+  usage "ERROR: Missing pipeline template type" 1
+fi
+
+case "${template}" in
+  -h|--help|help )
+    usage
+    ;;
+  *)
+    pattern="^($(echo "$pipeline_types" | tr "\n" "|" | sed -e "s/\|*$//"))$"
+    if [[ ! "${template}" =~ $pattern ]]
+    then
+      usage "ERROR: ${template} is not a valid pipeline template" 1
+    fi
+
+    echo "Installing ${template} pipeline in ${target}..."
+    cp -R ${src}/${template} ${target}/ci
+    cp ${src}/repipe ${target}/ci/
+    echo "--- {}" > ${target}/ci/settings.yml
+    exit 0
+    ;;
+esac
+
