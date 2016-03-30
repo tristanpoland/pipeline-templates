@@ -223,7 +223,7 @@ resources:
       key:               version
       access_key_id:     (( grab meta.aws.access_key ))
       secret_access_key: (( grab meta.aws.secret_key ))
-      initial_version:   (( grab meta.initial_version || 0.0.1 ))
+      initial_version:   (( grab meta.initial_version || "0.0.1" ))
 
   - name: notify
     type: slack-notification
