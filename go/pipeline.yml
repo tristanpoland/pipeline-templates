@@ -79,14 +79,14 @@ jobs:
     plan:
       - aggregate:
           - { get: git,     trigger: true,  passed: [test] }
-          - { get: version, trigger: false, params: {pre: rc} }
+          - { get: version, trigger: true, params: {pre: rc} }
       - put: version
         params: {file: version/number}
 
   - name: bump-patch
     public: true
     plan:
-      - { get: version, trigger: true, params: { bump: patch }, passed: [shipit] }
+      - { get: version, trigger: true, params: { bump: patch, pre: rc }, passed: [shipit] } # bump rc + patch, so that subesquent version bumps can trigger a new bump-patch
       - { put: version,                params: { file: version/number} }
 
   - name: minor
