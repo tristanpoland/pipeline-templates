@@ -138,7 +138,7 @@ jobs:
           repository: pushme/git
       - put: s3
         params:
-          from:  gh/artifacts/.*-(.*).tgz
+          file:  (( concat "gh/artifacts/" meta.name "-*.tgz" ))
       - put: github
         params:
           name:   gh/name
