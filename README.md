@@ -4,7 +4,7 @@ Pipeline Templates
 This repository collects up all that tribal wisdom we've gained
 from building Concourse Pipelines for various different purposes.
 Each template provides a base `ci/pipeline.yml` that structures the
-pipeline, a set of scripts (in `ci/scripts/`) that are referenced
+pipeline, `ci/settings.yml` to override any parameters defined by the template, a set of scripts (in `ci/scripts/`) that are referenced
 from the pipeline, and a `ci/repipe` utility for putting all the
 pieces together into a functioning Concourse pipeline.
 
@@ -27,6 +27,14 @@ an existing templated pipeline `ci/` directory to pick up new
 changes made to the templates.
 
 
+Once you've set up your repository, you'll need to fill in your
+`ci/settings.yml` file with any parameters the template required:
+
+    cd code/my-project
+    ci/repipe # Attempt to update the pipeline config,
+              # spitting out errors for missing parameters
+    vi ci/settings.yml # fill in the missing parameters
+    ci/repipe # Deploy the pipeline config!
 
 And Now, The Templates!
 =======================
