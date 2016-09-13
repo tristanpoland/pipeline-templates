@@ -27,7 +27,7 @@ meta:
     force_static_binary: false
 
   aws:
-    bucket:     (( concat meta.name "-pipeline" ))
+    bucket:     (( concat meta.pipeline "-pipeline" ))
     access_key: (( param "Please set your AWS Access Key ID" ))
     secret_key: (( param "Please set your AWS Secret Key ID" ))
 
@@ -41,7 +41,7 @@ meta:
 
   slack:
     webhook:       (( param "Please specify your Slack Incoming Webhook Integration URL" ))
-    notification: '(( concat ":sadpanda: " meta.name " build failed!<br>URL-GOES-HERE" ))'
+    notification: '(( concat ":sadpanda: " meta.pipeline " build failed!<br>URL-GOES-HERE" ))'
     channel:       (( param "Please specify the channel (#name) or user (@user) to send messages to" ))
     username:      concourse
     icon:          http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
@@ -53,7 +53,7 @@ meta:
   url: (( param "What is the URL for the Concourse instance this pipeline is located on?" ))
 
 groups:
-  - name: (( grab meta.name ))
+  - name: (( grab meta.pipeline ))
     jobs:
       - test
       - rc
@@ -87,7 +87,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": test job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.pipeline ": test job failed" ))'
 
   - name: rc
     public: true
@@ -104,7 +104,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": rc job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.pipeline ": rc job failed" ))'
 
   - name: bump-patch
     public: true
@@ -118,7 +118,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": bump-patch job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.pipeline ": bump-patch job failed" ))'
 
   - name: minor
     public: true
@@ -132,7 +132,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": minor job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.pipeline ": minor job failed" ))'
 
   - name: major
     public: true
@@ -146,7 +146,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": major job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.pipeline ": major job failed" ))'
 
   - name: shipit
     public: true
@@ -203,7 +203,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": shipit job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.pipeline ": shipit job failed" ))'
 
 resource_types:
   - name: slack-notification
