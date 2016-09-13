@@ -87,7 +87,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": `test` job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.name ": test job failed" ))'
 
   - name: rc
     public: true
@@ -104,7 +104,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": `rc` job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.name ": rc job failed" ))'
 
   - name: bump-patch
     public: true
@@ -118,7 +118,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": `bump-patch` job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.name ": bump-patch job failed" ))'
 
   - name: minor
     public: true
@@ -132,7 +132,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": `minor` job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.name ": minor job failed" ))'
 
   - name: major
     public: true
@@ -146,7 +146,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": `major` job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.name ": major job failed" ))'
 
   - name: shipit
     public: true
@@ -203,7 +203,7 @@ jobs:
             channel:  (( grab meta.slack.channel ))
             username: (( grab meta.slack.username ))
             icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.name ": `shipit` job failed" ))'
+            text:    '(( concat meta.slack.fail_url " " meta.name ": shipit job failed" ))'
 
 resource_types:
   - name: slack-notification
