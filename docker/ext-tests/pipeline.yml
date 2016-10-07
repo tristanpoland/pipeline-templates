@@ -34,7 +34,7 @@ meta:
       access_token: (( param "Please generate a Personal Access Token and specify it here" ))
 
   tests:
-    github: 
+    github:
       uri:          (( concat "git@github.com:" meta.tests.github.owner "/" meta.tests.github.repo ))
       owner:        (( grab meta.source.github.owner ))
       repo:         (( grab meta.source.github.repo ))
@@ -96,7 +96,7 @@ jobs:
           platform: linux
           image_resource:
             type: docker-image
-            source: 
+            source:
               .: (( inject meta.dockerhub ))
               tag:  edge
           inputs:
@@ -156,19 +156,13 @@ jobs:
 
       - put: latest # as 'latest'
         params:
-          load_base:       edge
-          load_file:       edge/image
-          load_repository: (( grab meta.dockerhub.repository ))
-          load_tag:        edge
+          load:       edge
 
       - put: latest # as 'vX.Y.Z'
         params:
           tag:             version/number
           tag_prefix:      v
-          load_base:       edge
-          load_file:       edge/image
-          load_repository: (( grab meta.dockerhub.repository ))
-          load_tag:        edge
+          load:       edge
 
       - put: version
         params:
