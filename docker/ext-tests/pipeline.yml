@@ -54,8 +54,8 @@ meta:
     channel:         (( param "Please specify the channel (#name) or user (@user) to send messages to" ))
     username:        concourse
     icon:            http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
-    build_fail_msg: '(( concat ":concourse-fail: <" meta.url "/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME| Failed to build " meta.name "!  Click for details.>" ))'
-    test_fail_msg:  '(( concat ":concourse-fail: <" meta.url "/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME| Failed " meta.name " tests!  Click for details.>" ))'
+    build_fail_msg: '(( concat ":concourse-fail: <" meta.url "/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME| Failed to build " meta.name "!  Click for details.>" ))'
+    test_fail_msg:  '(( concat ":concourse-fail: <" meta.url "/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME| Failed " meta.name " tests!  Click for details.>" ))'
 
 groups:
   - name: (( grab meta.name ))
