@@ -30,7 +30,7 @@ target=${2:-$(pwd)}
 [ -d ${target} ]   || usage "ERROR: ${target} path not found"       1
 
 pattern="^($(echo "$pipeline_types" | tr "\n" "|" | sed -e "s/\|*$//"))$"
-[[ "${template}" =~ $pattern ]] || usage "ERROR: ${template} is not a valid pipeline template" 1
+[[ "${template}"=~$pattern ]] || usage "ERROR: ${template} is not a valid pipeline template" 1
 
 echo "Installing ${template} pipeline in ${target}..."
 mkdir -p ${target}/ci
