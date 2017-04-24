@@ -87,11 +87,13 @@ jobs:
     public: true
     serial: true
     plan:
-      - aggregate:
+      - name: get-inputs
+        aggregate:
           - { get: tests }
           - { get: edge,    passed: [build], trigger: true }
           - { get: source,  passed: [build] }
-      - task: test-image
+      - name: run-tests
+        task: test-image
         config:
           platform: linux
           image_resource:
