@@ -93,29 +93,19 @@ jobs:
   - name: rc
     public: true
     plan:
-      - do:
-        - aggregate:
-            - { get: git,     trigger: true,  passed: [testflight] }
-            - { get: version, trigger: true, params: {pre: rc} }
-        - task: check-release-notes
-          config:
-            platform: linux
-            rootfs_uri:    (( grab meta.image ))
-            inputs:
-              - name: git
-                path: git
-            run:
-              path: ./git/ci/scripts/rc
-              args: []
-        - put: version
-          params: {file: version/number}
-        on_failure:
-          put: notify
-          params:
-            channel:  (( grab meta.slack.channel ))
-            username: (( grab meta.slack.username ))
-            icon_url: (( grab meta.slack.icon ))
-            text:    '(( concat meta.slack.fail_url " " meta.pipeline ": rc job failed (did you write release notes?)" ))'
+    - do:
+      - aggregate:
+          - { get: git,     trigger: true,  passed: [testflight] }
+          - { get: version, trigger: true, params: {pre: rc} }
+      - put: version
+        params: {file: version/number}
+      on_failure:
+        put: notify
+        params:
+          channel:  (( grab meta.slack.channel ))
+          username: (( grab meta.slack.username ))
+          icon_url: (( grab meta.slack.icon ))
+          text:    '(( concat meta.slack.fail_url " " meta.pipeline ": rc job failed" ))'
 
   - name: minor
     public: true
