@@ -68,7 +68,7 @@ jobs:
         - task: test
           config:
             platform: linux
-            image: (( grab meta.image ))
+            rootfs_uri: (( grab meta.image ))
             inputs:
               - name: git
             run:
@@ -96,7 +96,7 @@ jobs:
         - task: check-release-notes
           config:
             platform: linux
-            image: (( grab meta.image ))
+            rootfs_uri: (( grab meta.image ))
             inputs:
               - name: git
                 path: git
@@ -167,7 +167,7 @@ jobs:
         - name: release
           task: release
           config:
-            image: (( grab meta.image ))
+            rootfs_uri: (( grab meta.image ))
             platform: linux
             inputs:
               - name: version
