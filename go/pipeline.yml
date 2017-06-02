@@ -85,6 +85,7 @@ jobs:
               args: []
             params:
               MODULE: (( grab meta.go.module ))
+              FUBAR: 'Remove after testing update-canary'
         on_failure:
           put: notify
           params:
