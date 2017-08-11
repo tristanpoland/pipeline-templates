@@ -1,4 +1,16 @@
 ---
+#
+# ci/pipeline.yml
+#
+# Pipeline structure file for a BOSH Release pipeline
+#
+# DO NOT MAKE CHANGES TO THIS FILE.  Instead, modify
+# ci/settings.yml and override what needs overridden.
+# This uses spruce, so you have some options there.
+#
+# author:  James Hunt <james@niftylogic.com>
+# created: 2016-03-30
+
 meta:
   name:     (( param "Please name your pipeline" ))
   release:  (( grab meta.name ))
