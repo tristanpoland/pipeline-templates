@@ -2,9 +2,9 @@
 #
 # ci/scripts/testflight
 #
-# Script for testing a BOSH release using `bosh2`
+# Script for testing a BOSH release using bosh2
 #
-# author:  James Hunt <james@niftylogic.com>, Dr Nic Williams <drnicwilliams@gmail.com>
+# author:  James Hunt <james@niftylogic.com>
 
 header() {
 	echo
