@@ -20,6 +20,7 @@ meta:
   manifest:
     path:   (( concat "manifests/" meta.name ".yml" ))
     vars:   "--- {}"
+    operator_file_paths: "" # comma separated list relative to repo root
 
   image:
     name: starkandwayne/concourse
@@ -97,6 +98,7 @@ jobs:
             TEST_ERRAND:          (( grab meta.test-errand || ~ ))
             MANIFEST_PATH:        (( grab meta.manifest.path ))
             MANIFEST_VARS:        (( grab meta.manifest.vars ))
+            MANIFEST_OP_PATHS:    (( grab meta.manifest.operator_file_paths ))
       on_failure:
         put: notify
         params:
@@ -138,6 +140,7 @@ jobs:
             TEST_ERRAND:          (( grab meta.test-errand || ~ ))
             MANIFEST_PATH:        (( grab meta.manifest.path ))
             MANIFEST_VARS:        (( grab meta.manifest.vars ))
+            MANIFEST_OP_PATHS:    (( grab meta.manifest.operator_file_paths ))
         on_success:
           put: git-pull-requests
           params:
