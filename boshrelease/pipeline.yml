@@ -265,9 +265,9 @@ jobs:
             RELEASE_ROOT: gh
             REPO_OUT:     pushme
             NOTIFICATION_OUT: notifications
-            BRANCH:       (( grab meta.github.branch ))
-            GITHUB_OWNER: (( grab meta.github.owner ))
-            MANIFEST_PATH: (( concat "manifests/" meta.name ".yml" ))
+            BRANCH:        (( grab meta.github.branch ))
+            GITHUB_OWNER:  (( grab meta.github.owner ))
+            MANIFEST_PATH: (( grab meta.manifest.path ))
 
             AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
             AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))
