@@ -96,3 +96,54 @@ hosted BOSH-lite for viability testing, and (when the manual
 artifact, and also uploading that release tarball to S3.
 
 ![BOSH Release Pipeline][boshrelease-pipeline]
+
+## ci/settings.yml
+
+You will need to customize your pipeline with information about your CI, your Amazon AWS credentials + S3 bucket for storing assets + `version` file, your Slack account, etc.
+
+You will create and maintain `ci/settings.yml` for this.
+
+Try very very hard to not modify `ci/pipeline.yml`. Instead, use `./setup` to update `ci/pipeline.yml` with new changes from this repo. If you do need to modify `ci/pipeline.yml` please feel welcome to submit PRs to this repo so that we can merge them and share them with everyone.
+
+At Stark & Wayne we store our credentials for pipelines in Vault. We use the spruce syntax `(( vault "path1" ))` to dynamically fetch these values during `ci/repipe`. Recently Concourse CI has added native support for Vault, so we will investigate this in the future. Or you could try to use it and let us know how it goes!
+
+Here is an example [`ci/settings.yml`](https://github.com/starkandwayne/eden/blob/master/ci/settings.yml) from the `eden` CLI project (uses the `go` template):
+
+```yaml
+---
+meta:
+  name: eden
+  target: sw
+  url:     https://ci.starkandwayne.com
+
+  initial_version: 0.5.0
+
+  go:
+    binary: eden
+    cmd_module: .
+
+  aws:
+    access_key: (( vault "secret/aws/starkandwayne-s3:access" ))
+    secret_key: (( vault "secret/aws/starkandwayne-s3:secret" ))
+    region_name: eu-central-1
+
+  slack:
+    webhook: (( vault "secret/pipelines/eden/slack:webhook" ))
+    channel: "#eden" # https://openservicebrokerapi.slack.com/messages/C6Y5A2N8Z/
+    username: starkandwayne-ci
+    icon:     https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
+
+  github:
+    owner: starkandwayne
+    repo: eden
+    access_token: (( vault "secret/pipelines/shared/github:access_token" ))
+    private_key: (( vault  "secret/pipelines/shared/github:private_key" ))
+```
+
+Bonus, we use https://github.com/starkandwayne/safe as our CLI to interact with Vault.
+
+For example, to populate the `(( vault "secret/pipelines/eden/slack:webhook" ))` value in Vault:
+
+```
+safe set secret/pipelines/eden/slack webhook=https://hooks.slack.com/services/T2S1X7xxx/B6Y5A7xx/0nP7jxxx
+```
