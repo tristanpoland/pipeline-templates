@@ -20,14 +20,15 @@ Alternatively, you can initialize the pipeline from inside the
 target repository:
 
 ```
-cd code/my-docker-thing
-~/code/pipeline-templates/setup docker/base
+cd code/my-buildpack
+~/code/pipeline-templates/setup buildpack
 ```
 The first argument to `setup` is the template you want to use. Currently available templates:
 
 * `docker/base`
 * `go`
 * `boshrelease`
+* `buildpack`
 
 Don't let the name fool you!  `./setup` can also be used to update
 an existing templated pipeline `ci/` directory to pick up new
@@ -83,11 +84,6 @@ Takes a Go software project repository, runs unit tests and
 
 ![Go Project Pipeline][go-pipeline]
 
-[docker-pipeline]:      https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/docker.png
-[boshrelease-pipeline]: https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/boshrelease.png
-[go-pipeline]:          https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/go.png
-
-
 ### boshrelease
 
 Tries to create a BOSH release from the repository, upload it to a
@@ -96,6 +92,12 @@ hosted BOSH-lite for viability testing, and (when the manual
 artifact, and also uploading that release tarball to S3.
 
 ![BOSH Release Pipeline][boshrelease-pipeline]
+
+### buildpack
+
+Runs unit and integration tests on a Cloud Foundry buildpack, and can release it to Github.
+
+![Buildpack Pipeline][buildpack-pipeline]
 
 ## ci/settings.yml
 
@@ -147,3 +149,8 @@ For example, to populate the `(( vault "secret/pipelines/eden/slack:webhook" ))`
 ```
 safe set secret/pipelines/eden/slack webhook=https://hooks.slack.com/services/T2S1X7xxx/B6Y5A7xx/0nP7jxxx
 ```
+
+[docker-pipeline]:      https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/docker.png
+[boshrelease-pipeline]: https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/boshrelease.png
+[go-pipeline]:          https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/go.png
+[buildpack-pipeline]:          https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/buildpack.png
