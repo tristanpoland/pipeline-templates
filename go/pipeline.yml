@@ -17,6 +17,10 @@ meta:
   target:   (( param "Please identify the name of the target Concourse CI" ))
   pipeline: (( grab meta.name ))
 
+  git:
+    email:  (( param "Please provide the git email for automated commits" ))
+    name:   (( param "Please provide the git name for automated commits" ))
+
   go:
     version: 1.8
     module:  (( concat "github.com/" meta.github.owner "/" meta.github.repo ))
@@ -258,7 +262,9 @@ jobs:
               REPO_OUT:     pushme
               BRANCH:       (( grab meta.github.branch ))
               CMD_PKG:      (( grab meta.go.cmd_module ))
-              STATIC_BINARY: (( grab meta.go.force_static_binary ))
+              STATIC_BINARY:  (( grab meta.go.force_static_binary ))
+              GIT_EMAIL:      (( grab meta.git.email ))
+              GIT_NAME:       (( grab meta.git.name ))
         - name: version
           put: version
           params: { bump: final }
