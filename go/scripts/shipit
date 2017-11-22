@@ -8,7 +8,7 @@
 #
 # author:  James Hunt <james@niftylogic.com>
 # created: 2016-03-30
-# testing line
+#
 
 set -eu
 
@@ -36,6 +36,7 @@ fi
 
 ###############################################################
 
+go version; echo; echo
 #?#ORIGIN=$(pwd)
 TARGETS=${TARGETS:-linux/amd64 darwin/amd64}
 ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )
