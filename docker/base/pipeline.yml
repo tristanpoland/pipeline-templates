@@ -49,7 +49,7 @@ meta:
     notification: '(( concat ":concourse-fail: <" meta.url "/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME| Failed to build " meta.name "!  Click for details.>" ))'
     channel:       (( param "Please specify the channel (#name) or user (@user) to send messages to" ))
     username:      concourse
-    icon:          http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
+    icon:          https://cl.ly/2F421Y300u07/concourse-logo-blue-transparent.png
 
 groups:
   - name: (( grab meta.name ))

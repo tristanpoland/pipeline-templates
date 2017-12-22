@@ -41,7 +41,7 @@ meta:
     notification: '(( concat ":sadpanda: " meta.pipeline " build failed!<br>URL-GOES-HERE" ))'
     channel:       (( param "Please specify the channel (#name) or user (@user) to send messages to" ))
     username:      concourse
-    icon:          http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
+    icon:          https://cl.ly/2F421Y300u07/concourse-logo-blue-transparent.png
     fail_moji:     ":airplane_arriving:"
     success_moji:  ":airplane_departure:"
     upset_moji:    ":sad_panda:"
