@@ -6,6 +6,9 @@ meta:
 
   initial_version: 0.1.0
 
+  helm:
+    chart_path: .
+
   git:
     email:  ((git-commit-email))
     name:   ((git-commit-name))

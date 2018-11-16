@@ -20,6 +20,7 @@ header() {
 }
 
 : ${CHART_NAME:?required}
+: ${CHART_ROOT:?required}
 : ${REPO_ROOT:?required}
 : ${VERSION_FROM:?required}
 : ${RELEASE_ROOT:?required}
@@ -59,13 +60,13 @@ git clone ${REPO_ROOT} ${REPO_OUT}
 pushd ${REPO_OUT}
 header "Bump version in Chart.yaml"
 tmpfile=$(mktemp /tmp/chart-yaml.XXXX)
-sed -e "s/^version:.*$/version: ${VERSION}/g" helm/${CHART_NAME}/Chart.yaml > $tmpfile
-cp $tmpfile helm/${CHART_NAME}/Chart.yaml
+sed -e "s/^version:.*$/version: ${VERSION}/g" ${CHART_ROOT}/Chart.yaml > $tmpfile
+cp $tmpfile ${CHART_ROOT}/Chart.yaml
 
 header "Bump docker image version in Values.yaml"
 tmpfile=$(mktemp /tmp/chart-yaml.XXXX)
-sed -e "s/^  tag:.*$/  tag: ${VERSION}/g" helm/${CHART_NAME}/values.yaml > $tmpfile
-cp $tmpfile helm/${CHART_NAME}/values.yaml
+sed -e "s/^  tag:.*$/  tag: ${VERSION}/g" ${CHART_ROOT}/values.yaml > $tmpfile
+cp $tmpfile ${CHART_ROOT}/values.yaml
 popd
 
 header "Install helm"
@@ -80,7 +81,7 @@ helm plugin install https://github.com/hypnoglow/helm-s3.git
 
 header "Build helm chart"
 mkdir -p ${RELEASE_ROOT}/artifacts
-helm package ${REPO_OUT}/helm/${CHART_NAME} -d ${RELEASE_ROOT}/artifacts
+helm package ${REPO_OUT}/${CHART_ROOT} -d ${RELEASE_ROOT}/artifacts
 
 helm repo add our-repo ${HELM_S3_BUCKET_URI}
 
