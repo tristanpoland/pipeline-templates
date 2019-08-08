@@ -23,7 +23,7 @@ meta:
 
   image:
     name: starkandwayne/concourse-go
-    tag: 1.9
+    tag: 1.12
 
   cf:
     api_url:         (( param "Please provide api_url" ))
