@@ -455,16 +455,13 @@ jobs:
     plan:
       - get: git
       - get: github
-        passed:
-        - compile-release
+        passed: [compile-release]
         trigger: true
       - get: (( concat meta.bosh.stemcell.os "-stemcell-" meta.bosh.stemcell.major ))
-        passed:
-        - compile-release
+        passed: [compile-release]
         params: {tarball: false}
       - get: compiled-release
-        passed:
-        - compile-release
+        passed: [compile-release]
       - task: use-compiled-releases
         config:
           platform: linux
