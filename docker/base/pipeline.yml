@@ -92,7 +92,7 @@ jobs:
     public: true
     serial: true
     plan:
-      - aggregate:
+      - in_parallel:
           - { get: version }
           - { get: edge, passed: [build], params: { save: true } }
           - { get: git,  passed: [build] }

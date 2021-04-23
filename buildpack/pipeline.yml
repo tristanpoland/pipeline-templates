@@ -71,7 +71,7 @@ jobs:
     public: true
     plan:
     - do:
-      - aggregate:
+      - in_parallel:
         - { get: git, trigger: true }
       - task: unit-tests
         config:
@@ -100,7 +100,7 @@ jobs:
     serial: true
     plan:
     - do:
-      - aggregate:
+      - in_parallel:
         - { get: git, trigger: true }
       - task: integration-tests
         config:
@@ -133,7 +133,7 @@ jobs:
     public: true
     plan:
     - do:
-      - aggregate:
+      - in_parallel:
           - { get: git,     trigger: true,  passed: [unit-tests, integration-tests] }
           - { get: version, trigger: true, params: {pre: rc} }
       - put: version
@@ -180,7 +180,7 @@ jobs:
     plan:
     - do:
       - name: inputs
-        aggregate:
+        in_parallel:
           - { get: version, passed: [rc], params: {bump: final} }
           - { get: git,     passed: [rc] }
       - name: release
@@ -231,7 +231,7 @@ jobs:
         params:
           bump: patch
       - name: notify
-        aggregate:
+        in_parallel:
         - put: notify
           params:
             channel:  (( grab meta.slack.channel ))

@@ -93,13 +93,13 @@ jobs:
     plan:
     - do:
       - name: inputs
-        aggregate:
+        in_parallel:
           # - { get: version,  params: {bump: final} }
           # - { get: git }
           - { get: version, passed: [rc], params: {bump: final} }
           - { get: git,     passed: [rc] }
           - { get: image-latest, passed: [latest-image], params: { save: true } }
-      - aggregate:
+      - in_parallel:
         - name: docker-push-tag
           put: image-latest # as 'vX.Y.Z'
           params:
@@ -158,7 +158,7 @@ jobs:
         params:
           bump: patch
       # - name: notify
-      #   aggregate:
+      #   in_parallel:
       #   - put: notify
       #     params:
       #       channel:  (( grab meta.slack.channel ))
@@ -178,7 +178,7 @@ jobs:
     serial: true
     plan:
     - do:
-      - aggregate:
+      - in_parallel:
           # - { get: git,     trigger: true }
           - { get: git,     trigger: true, passed: [latest-image] }
           - { get: version, trigger: true, params: {pre: rc} }
