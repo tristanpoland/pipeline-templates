@@ -38,7 +38,6 @@ meta:
 
   slack:
     webhook:       (( param "Please specify your Slack Incoming Webhook Integration URL" ))
-    notification: '(( concat ":sadpanda: " meta.pipeline " build failed!<br>URL-GOES-HERE" ))'
     channel:       (( param "Please specify the channel (#name) or user (@user) to send messages to" ))
     username:      concourse
     icon:          https://cl.ly/2F421Y300u07/concourse-logo-blue-transparent.png
