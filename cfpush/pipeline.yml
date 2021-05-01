@@ -45,9 +45,9 @@ jobs:
     public: false
     serial: true
     plan:
-      - get: app
-        trigger: true
-      - { get: image }
+      - in_parallel:
+          - { get: app, trigger: true }
+          - { get: image }
       - task: setup-app
         image: image
         config:
@@ -66,10 +66,9 @@ jobs:
     public: false
     serial: true
     plan:
-      - get: app
-        trigger: false
-        passed: [deploy-staging]
-      - { get: image }
+      - in_parallel:
+          - { get: app, trigger: false, passed: [ deploy-staging ] }
+          - { get: image }
       - task: setup-app
         image: image
         config:

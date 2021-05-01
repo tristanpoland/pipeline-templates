@@ -73,6 +73,7 @@ groups:
       - major
       - minor
       - patch
+
 jobs:
   - name: latest-image
     public: true

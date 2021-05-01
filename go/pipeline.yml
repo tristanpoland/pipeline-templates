@@ -82,8 +82,9 @@ jobs:
     serial: true
     plan:
       - do:
-        - { get: git, trigger: true }
-        - { get: image }
+        - in_parallel:
+            - { get: git, trigger: true }
+            - { get: image }
         - task: test
           image: image
           config:
@@ -111,8 +112,9 @@ jobs:
     serial: true
     plan:
       - do:
-        - { get: git-pull-requests, trigger: true, version: every }
-        - { get: image }
+        - in_parallel:
+            - { get: git-pull-requests, trigger: true, version: every }
+            - { get: image }
         - put: git-pull-requests
           params:
             path: git-pull-requests
@@ -171,13 +173,10 @@ jobs:
     serial: true
     plan:
     - do:
-      - get: git
-        passed:
-        - test
-        trigger: true
-      - get: version
-        trigger: true
-      - { get: image, passed: [testflight] }
+      - in_parallel:
+          - { get: git,     trigger: true, passed: [ test ] }
+          - { get: version, trigger: true }
+          - { get: image,                  passed: [ test ] }
       - task: release-notes
         image: image
         config:
