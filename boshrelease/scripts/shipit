@@ -20,6 +20,7 @@ header() {
 
 : ${REPO_ROOT:?required}
 : ${RELEASE_ROOT:?required}
+: ${GH_RELEASE_NAME:?required}
 : ${REPO_OUT:?required}
 : ${BRANCH:?required}
 : ${GITHUB_OWNER:?required}
@@ -79,7 +80,7 @@ echo "RELEASE_SHA1=$RELEASE_SHA1"
 
 mkdir -p ${RELEASE_ROOT}/artifacts
 echo "v${VERSION}"                         > ${RELEASE_ROOT}/tag
-echo "v${VERSION}"                         > ${RELEASE_ROOT}/name
+echo "${GH_RELEASE_NAME} v${VERSION}"      > ${RELEASE_ROOT}/name
 mv ${REPO_OUT}/releases/*/*-${VERSION}.tgz   ${RELEASE_ROOT}/artifacts
 mv ${REPO_OUT}/ci/release_notes.md           ${RELEASE_ROOT}/notes.md
 cat >> ${RELEASE_ROOT}/notes.md <<EOF
