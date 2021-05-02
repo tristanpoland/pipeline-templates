@@ -50,9 +50,9 @@ meta:
 
   bosh:
     stemcell:
-      major: 621
+      major: 0
       cpi: aws-xen-hvm
-      os: ubuntu-xenial
+      os: ubuntu-bionic
     target:        ((bosh-lite-environment))
     cacert:        ((bosh-lite-ca-cert))
     username:      ((bosh-lite-client))
