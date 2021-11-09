@@ -20,6 +20,7 @@ header() {
 
 : ${REPO_ROOT:?required}
 : ${RELEASE_ROOT:?required}
+: ${GH_RELEASE_NAME:?required}
 : ${REPO_OUT:?required}
 : ${BRANCH:?required}
 : ${GITHUB_OWNER:?required}
@@ -51,7 +52,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 git clone ${REPO_ROOT} ${REPO_OUT}
 
 pushd ${REPO_OUT}
-RELEASE_NAME=$(bosh int config/final.yml --path /final_name)
+RELEASE_NAME=$(bosh int config/final.yml --path /final_name 2> /dev/null) \
+  || RELEASE_NAME=$(bosh int config/final.yml --path /name)
 
 cat > config/private.yml <<YAML
 ---
@@ -78,12 +80,13 @@ echo "RELEASE_SHA1=$RELEASE_SHA1"
 
 mkdir -p ${RELEASE_ROOT}/artifacts
 echo "v${VERSION}"                         > ${RELEASE_ROOT}/tag
-echo "v${VERSION}"                         > ${RELEASE_ROOT}/name
+echo "${GH_RELEASE_NAME} v${VERSION}"      > ${RELEASE_ROOT}/name
 mv ${REPO_OUT}/releases/*/*-${VERSION}.tgz   ${RELEASE_ROOT}/artifacts
 mv ${REPO_OUT}/ci/release_notes.md           ${RELEASE_ROOT}/notes.md
 cat >> ${RELEASE_ROOT}/notes.md <<EOF
 
 ### Deployment
+
 \`\`\`yaml
 releases:
 - name:    $RELEASE_NAME

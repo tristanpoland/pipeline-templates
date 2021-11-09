@@ -12,11 +12,22 @@ set -eu
 #
 
 STEMCELL_CPI=${STEMCELL_CPI:-aws-xen-hvm}
-STEMCELL_OS=${STEMCELL_OS:-ubuntu-xenial}
+STEMCELL_OS=${STEMCELL_OS:-ubuntu-bionic}
 STEMCELL_VERSION=$(cat stemcell/version)
 
-if [[ $(bosh stemcells --json | jq -r ".Tables[0].Rows[] | select(.os == \"${STEMCELL_OS}\") | .version | test(\"${STEMCELL_VERSION}\")" | grep true | uniq) != "true" ]]; then
-  #                        https://bosh.io/d/stemcells/bosh-aws-xen-hvm-ubuntu-trusty-go_agent?v=3586.7
+stemcells_count=$(
+  bosh stemcells --json \
+    | jq --raw-output \
+        --arg "cpi"     "${STEMCELL_CPI}" \
+        --arg "os"      "${STEMCELL_OS}" \
+        --arg "version" "${STEMCELL_VERSION}" \
+        '[ .Tables[0].Rows[]
+              | select(.os == $os
+                  and (.name | contains($cpi))
+                  and .version == $version)
+          ] | length'
+)
+if [[ ${stemcells_count} -gt 0 ]]; then
   bosh -n upload-stemcell "https://bosh.io/d/stemcells/bosh-${STEMCELL_CPI}-${STEMCELL_OS}-go_agent?v=${STEMCELL_VERSION}"
 fi
 

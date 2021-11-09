@@ -19,10 +19,20 @@ meta:
   url:      (( param "Please specify the full url of the target Concourse CI" ))
   pipeline: (( grab meta.name ))
 
-  image:    starkandwayne/concourse
+  git:
+    email:  (( param "Please provide the git email for automated commits" ))
+    name:   (( param "Please provide the git name for automated commits" ))
+
+  image:
+    name: starkandwayne/concourse
+    tag: latest
+    registry:
+      username: (( param "Please set your Docker registry username for your pipeline image" ))
+      password: (( param "Please set your Docker registry password for your pipeline image" ))
 
   aws:
     bucket:     (( concat meta.name "-pipeline" ))
+    region_name: us-east-1
     access_key: (( param "Please set your AWS Access Key ID" ))
     secret_key: (( param "Please set your AWS Secret Key ID" ))
 
@@ -89,20 +99,14 @@ jobs:
     public: true
     serial: true
     plan:
-      - name: get-inputs
-        aggregate:
+      - in_parallel:
           - { get: tests }
           - { get: edge,    passed: [build], trigger: true }
           - { get: source,  passed: [build] }
-      - name: run-tests
-        task: test-image
+      - task: test-image
+        image: edge
         config:
           platform: linux
-          image_resource:
-            type: docker-image
-            source:
-              .: (( inject meta.dockerhub ))
-              tag:  edge
           inputs:
             - name: source
             - name: tests
@@ -133,17 +137,15 @@ jobs:
     public: true
     serial: true
     plan:
-      - aggregate:
+      - in_parallel:
           - { get: version }
           - { get: edge,    passed: [test], params: { save: true } }
           - { get: source,  passed: [test] }
+          - { get: image }
 
       - task: release
+        image: image
         config:
-          image_resource:
-            type: docker-image
-            source:
-              repository: (( grab meta.image ))
           platform: linux
           inputs:
             - name: source
@@ -160,6 +162,8 @@ jobs:
             RELEASE_NAME: (( grab meta.release ))
             REPO_OUT:     pushme/source
             VERSION_FROM: version/number
+            GIT_EMAIL:    (( grab meta.git.email ))
+            GIT_NAME:     (( grab meta.git.name ))
 
       - put: latest # as 'latest'
         params:
@@ -191,6 +195,14 @@ resource_types:
       repository: cfcommunity/slack-notification-resource
 
 resources:
+  - name: image
+    type: docker-image
+    source:
+      repository: (( grab meta.image.name ))
+      tag:        (( grab meta.image.tag ))
+      username:   (( grab meta.image.registry.username ))
+      password:   (( grab meta.image.registry.password ))
+
   - name: source
     type: git
     source:
@@ -219,9 +231,10 @@ resources:
 
   - name: version
     type: semver
-    source :
+    source:
       driver:            s3
       bucket:            (( grab meta.aws.bucket ))
+      region_name:       (( grab meta.aws.region_name ))
       key:               version
       access_key_id:     (( grab meta.aws.access_key ))
       secret_access_key: (( grab meta.aws.secret_key ))
