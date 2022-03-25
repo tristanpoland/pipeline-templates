@@ -28,6 +28,7 @@ The first argument to `setup` is the template you want to use. Currently availab
 
 * `bash`
 * `boshrelease`
+* `genesis-kit`
 * `buildpack`
 * `cfpush`
 * `docker/base`
@@ -70,6 +71,9 @@ apt-get update
 apt-get install spruce
 ```
 
+The `ci/repipe` for genesis-kits also requires `jq`, which can be installed via
+brew on MacOS or apt-get on Debian/Ubuntu.
+
 ## And Now, The Templates!
 
 ### docker/base and docker/ext-tests
@@ -96,6 +100,23 @@ hosted BOSH-lite for viability testing, and (when the manual
 artifact, and also uploading that release tarball to S3.
 
 ![BOSH Release Pipeline][boshrelease-pipeline]
+
+### genesis-kit
+
+Builds a pipeline to create a pipeline that builds a release candidate, runs
+it through [spec tests](https://github.com/genesis-community/testkit) and
+spec-check, then any deployment, upgrad and acceptance tests.  Passing those,
+it prepares the release notes based on commit messages, and then can be
+manually released.  It also includes a manual prerelease after the initial RC
+is built.
+
+There is also provision for pulling upstream dependencies and bumping semantic
+version components.
+
+Read the README.md file under genesis-kit for customization options.  As
+written, it is based on the cf-genesis-kit.
+
+![Genesis Kit Pipeline][genesis-kit-pipeline]
 
 ### buildpack
 
@@ -162,6 +183,7 @@ safe set secret/pipelines/eden/slack webhook=https://hooks.slack.com/services/T2
 
 [docker-pipeline]:      https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/docker.png
 [boshrelease-pipeline]: https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/boshrelease.png
+[genesis-kit-pipeline]: https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/genesis-kit.png
 [go-pipeline]:          https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/go.png
 [buildpack-pipeline]:          https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/buildpack.png
 [helm-pipeline]: https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/helm.png

@@ -1,0 +1,45 @@
+---
+meta:
+  kit:             cf
+  release:         CF Genesis Kit
+  target:          cloudpipes/genesis
+  url:             https://cloudpipes.starkandwayne.com
+  iaas:            gcp
+  exposed:         yes
+  version_file:    version
+  initial_version: 2.1.0
+
+  upstream:
+    package:  cf-deployment
+
+  bosh:
+    uri:      ((bosh.uri))
+    username: ((bosh.username))
+    password: ((bosh.password))
+    cacert:   ((bosh.ca))
+
+  credhub:
+    url:      ((bosh.credhub_url))
+    username: ((bosh.credhub_username))
+    password: ((bosh.credhub_password))
+
+  vault:
+    url:       ((vault.url))
+    token:     ((vault.token))
+
+  aws:
+    access_key: ((aws.access_key_id))
+    secret_key: ((aws.secret_access_key))
+
+  github:
+    owner:        genesis-community
+    repo:         cf-genesis-kit
+    branch:       develop
+    main-branch:  main
+    private_key:  ((github.private_key))
+    access_token: ((github.access_token))
+
+  shout:
+    url:      ((shout.url)
+    username: ((shout.username))
+    password: ((shout.password))
