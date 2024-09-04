@@ -64,8 +64,8 @@ brew install starkandwayne/cf/spruce
 On Debian/Ubuntu:
 
 ```shell
-wget -q -O - https://raw.githubusercontent.com/starkandwayne-backup-repos/homebrew-cf/master/public.key | apt-key add -
-echo "deb http://apt.starkandwayne.com stable main" | tee /etc/apt/sources.list.d/starkandwayne.list
+wget -q -O - https://raw.githubusercontent.com/cloudfoundry-community/homebrew-cf/master/public.key | apt-key add -
+echo "deb http://apt.community.cloudfoundry.org stable main" | tee /etc/apt/sources.list.d/starkandwayne.list
 apt-get update
 
 apt-get install spruce
