@@ -64,7 +64,7 @@ brew install starkandwayne/cf/spruce
 On Debian/Ubuntu:
 
 ```shell
-wget -q -O - https://raw.githubusercontent.com/starkandwayne/homebrew-cf/master/public.key | apt-key add -
+wget -q -O - https://raw.githubusercontent.com/starkandwayne-backup-repos/homebrew-cf/master/public.key | apt-key add -
 echo "deb http://apt.starkandwayne.com stable main" | tee /etc/apt/sources.list.d/starkandwayne.list
 apt-get update
 
@@ -140,7 +140,7 @@ Try very very hard to not modify `ci/pipeline.yml`. Instead, use `./setup` to up
 
 At Stark & Wayne we store our credentials for pipelines in Vault. We use the spruce syntax `(( vault "path1" ))` to dynamically fetch these values during `ci/repipe`. Recently Concourse CI has added native support for Vault, so we will investigate this in the future. Or you could try to use it and let us know how it goes!
 
-Here is an example [`ci/settings.yml`](https://github.com/starkandwayne/eden/blob/master/ci/settings.yml) from the `eden` CLI project (uses the `go` template):
+Here is an example [`ci/settings.yml`](https://github.com/starkandwayne-backup-repos/eden/blob/master/ci/settings.yml) from the `eden` CLI project (uses the `go` template):
 
 ```yaml
 ---
@@ -181,9 +181,9 @@ For example, to populate the `(( vault "secret/pipelines/eden/slack:webhook" ))`
 safe set secret/pipelines/eden/slack webhook=https://hooks.slack.com/services/T2S1X7xxx/B6Y5A7xx/0nP7jxxx
 ```
 
-[docker-pipeline]:      https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/docker.png
-[boshrelease-pipeline]: https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/boshrelease.png
-[genesis-kit-pipeline]: https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/genesis-kit.png
-[go-pipeline]:          https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/go.png
-[buildpack-pipeline]:          https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/buildpack.png
-[helm-pipeline]: https://raw.githubusercontent.com/starkandwayne/pipeline-templates/master/screenshots/helm.png
+[docker-pipeline]:      https://raw.githubusercontent.com/starkandwayne-backup-repos/pipeline-templates/master/screenshots/docker.png
+[boshrelease-pipeline]: https://raw.githubusercontent.com/starkandwayne-backup-repos/pipeline-templates/master/screenshots/boshrelease.png
+[genesis-kit-pipeline]: https://raw.githubusercontent.com/starkandwayne-backup-repos/pipeline-templates/master/screenshots/genesis-kit.png
+[go-pipeline]:          https://raw.githubusercontent.com/starkandwayne-backup-repos/pipeline-templates/master/screenshots/go.png
+[buildpack-pipeline]:          https://raw.githubusercontent.com/starkandwayne-backup-repos/pipeline-templates/master/screenshots/buildpack.png
+[helm-pipeline]: https://raw.githubusercontent.com/starkandwayne-backup-repos/pipeline-templates/master/screenshots/helm.png
