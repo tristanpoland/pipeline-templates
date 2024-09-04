@@ -11,7 +11,7 @@ pieces together into a functioning Concourse pipeline.
 Setup is straightforward:
 
 ```shell
-git clone https://github.com/starkandwayne/pipeline-templates
+git clone https://github.com/starkandwayne-backup-repos/pipeline-templates
 cd pipeline-templates
 ./setup <template> ~/bosh/my-new-boshrelease
 ```
@@ -173,7 +173,7 @@ meta:
     private_key: (( vault  "secret/pipelines/shared/github:private_key" ))
 ```
 
-Bonus, we use https://github.com/starkandwayne/safe as our CLI to interact with Vault.
+Bonus, we use https://github.com/starkandwayne-backup-repos/safe as our CLI to interact with Vault.
 
 For example, to populate the `(( vault "secret/pipelines/eden/slack:webhook" ))` value in Vault:
 
