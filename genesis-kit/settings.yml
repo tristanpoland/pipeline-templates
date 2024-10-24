@@ -1,27 +1,39 @@
 ---
 meta:
-  kit:             cf
-  release:         CF Genesis Kit
-  target:          cloudpipes/genesis
-  url:             https://cloudpipes.starkandwayne.com
-  iaas:            gcp
-  exposed:         yes
-  version_file:    version
-  initial_version: 2.1.0
+  kit:             <kit>
+  release:         <kit-descriptor>
+  target:          pipes/genesis
+  url:             https://pipes.scalecf.net
+  iaas:            vsphere  # <aws|gcp|openstack|azure>
+  exposed:         false
+  initial_version: <Intended Initial Release Version>
 
-  upstream:
-    package:  cf-deployment
+  #upstream:
+    #  An optional block describing any upstream deployment repo to pull in
+
+    # manifests: 
+    #   package: app-autoscaler
+    #   repo:    cloudfoundry/app-autoscaler-release
+    #   path:    upstream
+    #   filter:
+    #   - templates/*
+    #   - operations/*
+
+    #  An optional block describing the bosh release used for generating release notes, checking specs,
+    #  and upstream release updates
+
+    # bosh_releases      
+    # - name:       app-autoscaler
+    #   type:       github-release
+    #   repository: cloudfoundry/app-autoscaler-release
+    #   path:       overlay/releases/app-autoscaler.yml
+    #   access_token: ((github.access_token))
 
   bosh:
     uri:      ((bosh.uri))
     username: ((bosh.username))
     password: ((bosh.password))
     cacert:   ((bosh.ca))
-
-  credhub:
-    url:      ((bosh.credhub_url))
-    username: ((bosh.credhub_username))
-    password: ((bosh.credhub_password))
 
   vault:
     url:       ((vault.url))
@@ -38,6 +50,8 @@ meta:
     main-branch:  main
     private_key:  ((github.private_key))
     access_token: ((github.access_token))
+    name:         ((github.name))
+    email:        ((github.email))
 
   shout:
     url:      ((shout.url)
